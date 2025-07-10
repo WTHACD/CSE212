@@ -62,7 +62,7 @@ public static class Arrays
             data.InsertRange(0, rightPart);
         }
     }
-
+  
 
 
 
