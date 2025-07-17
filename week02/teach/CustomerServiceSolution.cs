@@ -19,7 +19,7 @@ public class CustomerServiceSolution {
         service.ServeCustomer();
         // Defect(s) Found: This found that the ServeCustomer should get the customer before deleting from the list
 
-        Console.WriteLine("=================");
+        Console.WriteLine("================="); 
 
         // Test 2
         // Scenario: Can I add two customers and then serve the customers in the right order?
