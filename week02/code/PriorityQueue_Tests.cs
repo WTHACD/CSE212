@@ -9,7 +9,7 @@ public class PriorityQueueTests
     // Scenario: Enqueue multiple items with different priorities and dequeue them.
     // The highest priority item should be dequeued first.
     // Expected Result: Dequeue returns "High", then "Medium", then "Low".
-    // Defect(s) Found: None.
+    // Defect(s) Found: None. The code worked as expected.
     public void TestPriorityQueue_DequeueBasic()
     {
         var priorityQueue = new PriorityQueue();
@@ -26,7 +26,7 @@ public class PriorityQueueTests
     // Scenario: Enqueue multiple items with the same highest priority.
     // The item enqueued first should be dequeued first (FIFO).
     // Expected Result: Dequeue returns "First", then "Second".
-    // Defect(s) Found: None. The implementation correctly handles FIFO for items with the same priority.
+    // Defect(s) Found: None. The implementation correctly handles FIFO for items with the same priority by using '>' instead of '>=' in the loop, which preserves the order of insertion.
     public void TestPriorityQueue_SamePriorityFIFO()
     {
         var priorityQueue = new PriorityQueue();
@@ -41,7 +41,7 @@ public class PriorityQueueTests
     [TestMethod]
     // Scenario: Try to dequeue from an empty queue.
     // Expected Result: An InvalidOperationException should be thrown.
-    // Defect(s) Found: None. The code correctly throws an exception.
+    // Defect(s) Found: None. The code correctly throws an exception when the queue is empty.
     public void TestPriorityQueue_Empty()
     {
         var priorityQueue = new PriorityQueue();
@@ -67,7 +67,7 @@ public class PriorityQueueTests
     [TestMethod]
     // Scenario: A complex sequence of enqueue and dequeue operations to test the queue's integrity.
     // Expected Result: The sequence of dequeued items should be correct based on priority and FIFO.
-    // Defect(s) Found: None.
+    // Defect(s) Found: None. The code passed this complex scenario without issues.
     public void TestPriorityQueue_Complex()
     {
         var priorityQueue = new PriorityQueue();
