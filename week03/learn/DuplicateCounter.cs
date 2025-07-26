@@ -25,6 +25,25 @@
     private static int CountDuplicates(int[] data)
     {
         // Add code here.
-        return 0;
+        // 1. Create a HashSet to store the unique numbers we find.
+        var uniqueNumbers = new HashSet<int>();
+        // 2. Initialize a counter for the duplicates.
+        var duplicateCount = 0;
+        foreach (var number in data)
+        {
+            // 4. Check if the number is already in our set of unique numbers.
+            //    The .Add() method of a HashSet returns 'false' if the item
+            //    already exists in the set. This is a very efficient way to check
+            //    for existence and add in one step.
+            if (!uniqueNumbers.Add(number))
+            {
+                // 5. If .Add() returns false, it means the number is a duplicate.
+                //    So, we increment our duplicate counter.
+                duplicateCount++;
+            }
+        }
+
+        // 6. Return the final count of duplicates.
+        return duplicateCount;
     }
 }

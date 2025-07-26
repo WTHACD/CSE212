@@ -21,10 +21,28 @@ public static class SetsAndMaps
     /// <param name="words">An array of 2-character words (lowercase, no duplicates)</param>
     public static string[] FindPairs(string[] words)
     {
-        // TODO Problem 1 - ADD YOUR CODE HERE
-        return [];
-    }
+        var seenWords = new HashSet<string>();
+        var resultsList = new List<string>();
 
+        foreach (var word in words)
+        {
+            if (word[0] == word[1])
+            {
+                continue;
+            }
+            var reversedWord = new string(new[] { word[1], word[0] });
+
+            if (seenWords.Contains(reversedWord))
+            {
+                resultsList.Add($"{word} & {reversedWord}");
+            }
+            else
+            {
+                seenWords.Add(word);
+            }
+        }
+        return resultsList.ToArray();
+    }
     /// <summary>
     /// Read a census file and summarize the degrees (education)
     /// earned by those contained in the file.  The summary
@@ -42,12 +60,19 @@ public static class SetsAndMaps
         foreach (var line in File.ReadLines(filename))
         {
             var fields = line.Split(",");
-            // TODO Problem 2 - ADD YOUR CODE HERE
+            var degree = fields[3];
+            if (degrees.ContainsKey(degree))
+            {
+                degrees[degree]++;
+            }
+            else
+            {
+                degrees[degree] = 1;
+            }
         }
 
         return degrees;
     }
-
     /// <summary>
     /// Determine if 'word1' and 'word2' are anagrams.  An anagram
     /// is when the same letters in a word are re-organized into a 
@@ -66,10 +91,41 @@ public static class SetsAndMaps
     /// </summary>
     public static bool IsAnagram(string word1, string word2)
     {
-        // TODO Problem 3 - ADD YOUR CODE HERE
-        return false;
-    }
+       
+        string processed1 = word1.Replace(" ", "").ToLower();
+        string processed2 = word2.Replace(" ", "").ToLower();       
+        if (processed1.Length != processed2.Length)
+        {
+            return false;
+        }
+       
+        var letterCounts = new Dictionary<char, int>();
 
+        foreach (char letter in processed1)
+        {
+            if (letterCounts.ContainsKey(letter))
+            {
+                letterCounts[letter]++;
+            }
+            else
+            {
+                letterCounts[letter] = 1;
+            }
+        }
+        
+        foreach (char letter in processed2)
+        {
+           
+            if (!letterCounts.ContainsKey(letter) || letterCounts[letter] == 0)
+            {
+                return false;
+            }
+            
+            letterCounts[letter]--;
+        }
+        
+        return true;
+    }
     /// <summary>
     /// This function will read JSON (Javascript Object Notation) data from the 
     /// United States Geological Service (USGS) consisting of earthquake data.
@@ -101,6 +157,21 @@ public static class SetsAndMaps
         // on those classes so that the call to Deserialize above works properly.
         // 2. Add code below to create a string out each place a earthquake has happened today and its magitude.
         // 3. Return an array of these string descriptions.
-        return [];
+        // Creamos una lista para almacenar los resúmenes.
+        var summaryList = new List<string>();
+
+        // Recorremos cada 'feature' (terremoto) en la colección deserializada.
+        foreach (var feature in featureCollection.Features)
+        {
+            // Extraemos las propiedades que nos interesan.
+            var place = feature.Properties.Place;
+            var magnitude = feature.Properties.Magnitude;
+
+            // Creamos la cadena formateada y la añadimos a la lista.
+            summaryList.Add($"{place} - Mag {magnitude}");
+        }
+
+        // Devolvemos la lista convertida a un array de strings.
+        return summaryList.ToArray();
     }
 }
